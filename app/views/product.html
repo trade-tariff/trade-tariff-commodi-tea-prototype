@@ -1,0 +1,86 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Question page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "/"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">Can you identify</span>
+
+    <h1 class="govuk-heading-l">
+      "{{ data['description'] }}"
+    </h1>
+
+    <form class="form" action="/product-answer" method="post">
+      {% if (data['searchResult']) %}
+      <p class="govuk-body-l">
+        The tool identifies it as commodity code: <b>{{ data.searchResult.code }}</b>
+      </p>
+
+      <ul class="govuk-list">
+        {% for ancestor in data.searchResult.hierarchy %}
+        <li style="margin-left: {{ loop.index0 * 20 }}px;{% if (loop.index0) %} padding-left: 0.5em; list-style-type: '┕';{% endif %}">{{ ancestor.description }}</li>
+        {% endfor %}
+        <li style="margin-left: {{ data.searchResult.hierarchy.length * 20 }}px; padding-left: 0.5em; list-style-type: '┕';"><b>{{ data.searchResult.commodity.description }}</b></li>
+      </ul>
+      <p>Look it up on the <a href="https://www.trade-tariff.service.gov.uk/search?q={{ data.searchResult.commodity.code }}" target="ott">Online Trade Tariff</a></p>
+      </p>
+      {% else %}
+      <p>
+        Came back with no match
+      </p>
+      {% endif %}
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break govuk-section-break--visible">
+      {{ govukRadios({
+        name: "isCodeCorrect",
+        fieldset: {
+          legend: {
+            text: "Is this the correct 8 digit CN code?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes - it's definitely correct",
+            hint: {
+              text: "There is enough information in the description that I'm confident it's the correct code"
+            }
+          },
+          {
+            value: "maybe",
+            text: "Maybe",
+            hint: {
+              text: "It might be the correct code, but there's not really enough information to be sure"
+            }
+          },
+          {
+            value: "no",
+            text: "No",
+            hint: {
+              text: "It's got it completely wrong!"
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+      text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirmation page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {{ govukPanel({
+        titleText: "Thank you for confirming",
+        html: "🎉 You've gained 1 internet point! 🎉"
+      }) }}
+
+      <p>
+        This feedback will be used to help improve the FPO commodity code identification tool and make it as good as it can be!
+      </p>
+
+      <p>
+        <a href="/new-product">
+          Check another commodi-tea
+        </a>
+      </p>
+
+
+    </div>
+  </div>
+
+{% endblock %}

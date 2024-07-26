@@ -1,0 +1,72 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Question page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form class="form" action="/path/of/next/page" method="post">
+        <span class="govuk-caption-l">"{{ data['description'] }}"</span>
+
+        {{ govukCheckboxes({
+          name: "whereDoYouLive",
+          fieldset: {
+            legend: {
+              text: "What extra information would you need to classify this to 8 digits?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "item-type",
+              text: "Type of item"
+            },
+            {
+              value: "material",
+              text: "Material"
+            },
+            {
+              value: "purpose",
+              text: "The purpose of the item"
+            },
+            {
+              value: "state",
+              text: "What state the item is in"
+            },
+            {
+              value: "alcohol-volume",
+              text: "Alcohol volume"
+            },
+            {
+              value: "gender",
+              text: "Gender (e.g. for clothing)"
+            },
+            {
+              value: "container-size",
+              text: "Container size"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
